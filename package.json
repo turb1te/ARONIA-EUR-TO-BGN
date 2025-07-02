@@ -2,7 +2,7 @@
   "name": "aronia-eur-to-bgn",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://YOUR_USERNAME.github.io/ARONIA-EUR-TO-BGN",
+  "homepage": "https://turb1te.github.io/ARONIA-EUR-TO-BGN",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
