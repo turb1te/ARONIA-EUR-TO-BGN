@@ -1,4 +1,4 @@
-# Git commands to push to GitHub:
+s# Git commands to push to GitHub:
 
 # 1. Initialize git repository
 git init
