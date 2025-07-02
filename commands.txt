@@ -1,0 +1,18 @@
+# Git commands to push to GitHub:
+
+# 1. Initialize git repository
+git init
+
+# 2. Add all files
+git add .
+
+# 3. Initial commit
+git commit -m "Initial commit - BGN EUR Converter"
+
+# 4. Add GitHub repository as remote
+git remote add origin https://github.com/YOUR_USERNAME/ARONIA-EUR-TO-BGN.git
+
+# 5. Push to GitHub
+git push -u origin main
+
+# After that, GitHub Actions will automatically deploy the application!
