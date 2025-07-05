@@ -41,28 +41,30 @@ const ConversionHistory: React.FC<ConversionHistoryProps> = ({
 
   return (
     <Card className="w-full">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Clock className="h-5 w-5" />
-          История на конверсиите ({history.length})
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0 pb-3 sm:pb-4">
+        <CardTitle className="text-base sm:text-lg font-semibold flex items-center gap-2">
+          <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="break-words">
+            История на конверсиите ({history.length})
+          </span>
         </CardTitle>
         {history.length > 0 && (
           <Button
             variant="outline"
             size="sm"
             onClick={onClearHistory}
-            className="hover:bg-destructive hover:text-destructive-foreground"
+            className="hover:bg-destructive hover:text-destructive-foreground w-full sm:w-auto h-9 sm:h-8"
           >
-            <Trash2 className="h-4 w-4 mr-2" />
+            <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
             Изчисти
           </Button>
         )}
       </CardHeader>
-      <CardContent>
-        <div className="space-y-2 max-h-80 overflow-y-auto" style={{ maxHeight: 'calc(5 * 5rem)' }}>
+      <CardContent className="px-3 sm:px-6">
+        <div className="space-y-2 max-h-64 sm:max-h-80 overflow-y-auto scrollbar-thin" style={{ maxHeight: 'calc(5 * 5rem)' }}>
           <AnimatePresence>
             {history.length === 0 ? (
-              <p className="text-muted-foreground text-center py-4">
+              <p className="text-muted-foreground text-center py-6 sm:py-8 text-sm sm:text-base">
                 Няма записи в историята
               </p>
             ) : (
@@ -77,19 +79,25 @@ const ConversionHistory: React.FC<ConversionHistoryProps> = ({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border min-w-0"
+                    className="p-3 sm:p-4 bg-muted/50 rounded-lg border"
                   >
-                    <div className="flex flex-col space-y-1 flex-1 min-w-0">
-                      <div className="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis">
-                        {formatCurrency(conversion.input, fromCurrency)} →{' '}
-                        {formatCurrency(conversion.rounded, toCurrency)}
+                    <div className="space-y-2 sm:space-y-3">
+                      {/* Main conversion display */}
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <div className="text-sm sm:text-base font-medium break-all">
+                          {formatCurrency(conversion.input, fromCurrency)} →{' '}
+                          {formatCurrency(conversion.rounded, toCurrency)}
+                        </div>
+                        <div className="text-xs sm:text-sm text-muted-foreground break-words order-last sm:order-none">
+                          {conversion.explanation}
+                        </div>
                       </div>
-                      <div className="text-xs text-muted-foreground whitespace-nowrap overflow-hidden text-ellipsis">
-                        Сурова стойност: {formatRawValue(conversion.raw, toCurrency)}
+                      
+                      {/* Raw value */}
+                      <div className="text-xs sm:text-sm text-muted-foreground break-all">
+                        <span className="font-medium">Сурова стойност:</span>{' '}
+                        {formatRawValue(conversion.raw, toCurrency)}
                       </div>
-                    </div>
-                    <div className="text-xs text-muted-foreground text-right ml-2 flex-shrink-0">
-                      {conversion.explanation}
                     </div>
                   </motion.div>
                 )

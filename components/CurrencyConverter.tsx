@@ -79,33 +79,41 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ onConversion }) =
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold flex items-center justify-center gap-2">
-          <Calculator className="h-6 w-6" />
-          BGN ↔ EUR Конвертор
+      <CardHeader className="text-center pb-4 sm:pb-6">
+        <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold flex items-center justify-center gap-2 flex-wrap">
+          <Calculator className="h-5 w-5 sm:h-6 sm:w-6" />
+          <span className="whitespace-nowrap">BGN ↔ EUR</span>
         </CardTitle>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-sm sm:text-base px-2 sm:px-0">
           Официален курс: 1 EUR = {FIXED_RATE} BGN
         </p>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6">
         <Tabs 
           value={direction} 
           onValueChange={(value) => handleDirectionChange(value as ConversionDirection)}
           className="w-full"
         >
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="BGN_TO_EUR" className="flex items-center gap-2">
-              BGN → EUR
+          <TabsList className="grid w-full grid-cols-2 h-12 sm:h-auto">
+            <TabsTrigger 
+              value="BGN_TO_EUR" 
+              className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-2 sm:py-3"
+            >
+              <span className="hidden sm:inline">BGN → EUR</span>
+              <span className="sm:hidden">BGN→EUR</span>
             </TabsTrigger>
-            <TabsTrigger value="EUR_TO_BGN" className="flex items-center gap-2">
-              EUR → BGN
+            <TabsTrigger 
+              value="EUR_TO_BGN" 
+              className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-2 sm:py-3"
+            >
+              <span className="hidden sm:inline">EUR → BGN</span>
+              <span className="sm:hidden">EUR→BGN</span>
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value={direction} className="space-y-4">
+          <TabsContent value={direction} className="space-y-4 mt-4 sm:mt-6">
             <div className="space-y-2">
-              <label htmlFor="amount" className="text-sm font-medium">
+              <label htmlFor="amount" className="text-sm font-medium block">
                 Сума в {fromCurrency}
               </label>
               <Input
@@ -117,14 +125,14 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ onConversion }) =
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="text-lg"
+                className="text-base sm:text-lg h-12 sm:h-14"
                 aria-label={`Amount in ${fromCurrency}`}
               />
             </div>
             
             <Button 
               onClick={handleConvert} 
-              className="w-full h-12 text-lg"
+              className="w-full h-12 sm:h-14 text-base sm:text-lg font-semibold"
               disabled={isAnimating}
             >
               <motion.div
@@ -136,7 +144,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ onConversion }) =
                   animate={isAnimating ? { x: [0, 3, -3, 0] } : { x: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <ArrowRightLeft className="h-5 w-5" />
+                  <ArrowRightLeft className="h-4 w-4 sm:h-5 sm:w-5" />
                 </motion.div>
                 Конвертирай
               </motion.div>
@@ -151,26 +159,26 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ onConversion }) =
             transition={{ duration: 0.3 }}
             className="space-y-4"
           >
-            <div className={`p-4 rounded-lg border ${result.isValid ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+            <div className={`p-4 sm:p-6 rounded-lg border ${result.isValid ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
               {result.isValid ? (
-                <div className="space-y-3">
+                <div className="space-y-3 sm:space-y-4">
                   <div className="text-center">
                     <div className="text-sm text-muted-foreground">Резултат</div>
-                    <div className="text-3xl font-bold">
+                    <div className="text-2xl sm:text-3xl font-bold break-all">
                       {result.rounded.toFixed(2)} {toCurrency}
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="font-medium">Сурова стойност:</span>
-                      <div className="text-muted-foreground">
+                  <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 text-sm">
+                    <div className="space-y-1">
+                      <span className="font-medium block">Сурова стойност:</span>
+                      <div className="text-muted-foreground break-all">
                         {formatNumber(result.raw)} {toCurrency}
                       </div>
                     </div>
-                    <div>
-                      <span className="font-medium">Закръгляване:</span>
-                      <div className="text-muted-foreground">
+                    <div className="space-y-1">
+                      <span className="font-medium block">Закръгляване:</span>
+                      <div className="text-muted-foreground break-words">
                         {result.explanation}
                       </div>
                     </div>
@@ -181,7 +189,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ onConversion }) =
                   </div>
                 </div>
               ) : (
-                <div className="text-center text-red-600">
+                <div className="text-center text-red-600 break-words">
                   {result.explanation}
                 </div>
               )}
